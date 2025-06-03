@@ -3,7 +3,10 @@ const Scripture = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M20 20c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10zm10 0c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10 10 4.5 10 10z"/%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+      <div className="absolute inset-0" style={{
+        backgroundImage: `radial-gradient(circle at 20px 20px, rgba(255,255,255,0.05) 2px, transparent 0)`,
+        backgroundSize: '40px 40px'
+      }}></div>
       
       <div className="container mx-auto px-6 max-w-5xl relative z-10">
         <div className="text-center mb-12">
