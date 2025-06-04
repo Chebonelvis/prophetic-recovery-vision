@@ -1,9 +1,12 @@
-
 import { Calendar, MapPin, Ticket } from "lucide-react";
+import BackgroundVideo from "./BackgroundVideo";
 
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
+      {/* Background Video */}
+      <BackgroundVideo />
+      
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-black/20"></div>
       <div className="absolute inset-0" style={{

@@ -4,6 +4,7 @@ import EventDescription from "@/components/EventDescription";
 import Scripture from "@/components/Scripture";
 import Testimonials from "@/components/Testimonials";
 import Registration from "@/components/Registration";
+import BackgroundMusic from "@/components/BackgroundMusic";
 
 const Index = () => {
   return (
@@ -13,6 +14,9 @@ const Index = () => {
       <Scripture />
       <Testimonials />
       <Registration />
+      
+      {/* Background Music Component */}
+      <BackgroundMusic />
       
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8">
