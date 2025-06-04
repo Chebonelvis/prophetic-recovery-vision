@@ -4,8 +4,11 @@ import BackgroundVideo from "./BackgroundVideo";
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
-      {/* Background Video */}
-      <BackgroundVideo />
+      {/* Background Image */}
+      <BackgroundVideo 
+        useImage={true}
+        imageSrc="/lovable-uploads/1a77e9a5-a12a-43d1-9415-dbba42ba01fc.png"
+      />
       
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-black/20"></div>

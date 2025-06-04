@@ -3,34 +3,54 @@ import { useEffect, useRef } from 'react';
 
 interface BackgroundVideoProps {
   videoSrc?: string;
+  imageSrc?: string;
+  useImage?: boolean;
   className?: string;
 }
 
 const BackgroundVideo = ({ 
   videoSrc = "https://player.vimeo.com/external/434045526.sd.mp4?s=c27eecc69a27dbc4ff2b87d38afc35f1a9e7c02d&profile_id=139&oauth2_token_id=57447761",
+  imageSrc,
+  useImage = false,
   className = ""
 }: BackgroundVideoProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      // Ensure video plays on mobile devices
-      video.setAttribute('playsinline', 'true');
-      video.setAttribute('webkit-playsinline', 'true');
-      
-      // Handle autoplay with fallback
-      const playVideo = async () => {
-        try {
-          await video.play();
-        } catch (error) {
-          console.log('Autoplay failed:', error);
-        }
-      };
-      
-      playVideo();
+    if (!useImage) {
+      const video = videoRef.current;
+      if (video) {
+        // Ensure video plays on mobile devices
+        video.setAttribute('playsinline', 'true');
+        video.setAttribute('webkit-playsinline', 'true');
+        
+        // Handle autoplay with fallback
+        const playVideo = async () => {
+          try {
+            await video.play();
+          } catch (error) {
+            console.log('Autoplay failed:', error);
+          }
+        };
+        
+        playVideo();
+      }
     }
-  }, []);
+  }, [useImage]);
+
+  if (useImage && imageSrc) {
+    return (
+      <div className={`absolute inset-0 overflow-hidden ${className}`}>
+        <div 
+          className="absolute top-0 left-0 min-w-full min-h-full w-full h-full bg-cover bg-center bg-no-repeat opacity-60"
+          style={{ backgroundImage: `url(${imageSrc})` }}
+        ></div>
+        
+        {/* Overlay to ensure text readability */}
+        <div className="absolute inset-0 bg-black/50"></div>
+      </div>
+    );
+  }
 
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
