@@ -15,7 +15,7 @@ const Index = () => {
       <Testimonials />
       <Registration />
       
-      {/* Background Music Component */}
+      {/* Background Music Component - will show upload prompt until audio is provided */}
       <BackgroundMusic />
       
       {/* Footer */}

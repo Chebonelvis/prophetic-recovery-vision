@@ -7,39 +7,49 @@ interface BackgroundMusicProps {
 }
 
 const BackgroundMusic = ({ 
-  audioSrc = "https://www.soundjay.com/misc/sounds-565.mp3" 
+  audioSrc 
 }: BackgroundMusicProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.3);
-  const [showControls, setShowControls] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const [audioError, setAudioError] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    if (!audioSrc) {
+      setAudioError(true);
+      return;
+    }
+
     const audio = audioRef.current;
     if (audio) {
       audio.volume = volume;
       
-      // Try to autoplay with user interaction fallback
-      const playAudio = async () => {
-        try {
-          await audio.play();
-          setIsPlaying(true);
-        } catch (error) {
-          console.log('Autoplay blocked, waiting for user interaction');
-          setShowControls(true);
-        }
+      // Handle audio loading errors
+      const handleError = () => {
+        console.log('Audio failed to load');
+        setAudioError(true);
+        setShowControls(true);
       };
 
-      // Attempt autoplay after a short delay
-      const timer = setTimeout(playAudio, 1000);
-      return () => clearTimeout(timer);
+      const handleCanPlay = () => {
+        setAudioError(false);
+      };
+
+      audio.addEventListener('error', handleError);
+      audio.addEventListener('canplay', handleCanPlay);
+
+      return () => {
+        audio.removeEventListener('error', handleError);
+        audio.removeEventListener('canplay', handleCanPlay);
+      };
     }
-  }, [volume]);
+  }, [audioSrc, volume]);
 
   const togglePlay = async () => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || audioError) return;
 
     try {
       if (isPlaying) {
@@ -51,6 +61,7 @@ const BackgroundMusic = ({
       }
     } catch (error) {
       console.log('Audio play failed:', error);
+      setAudioError(true);
     }
   };
 
@@ -69,6 +80,22 @@ const BackgroundMusic = ({
       audioRef.current.volume = newVolume;
     }
   };
+
+  // Don't render if no audio source or there's an error
+  if (!audioSrc || audioError) {
+    return (
+      <div className="fixed bottom-6 right-6 z-50">
+        <div className="bg-white/10 backdrop-blur-md rounded-full p-3 border border-white/20">
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 rounded-full bg-gray-400 text-white flex items-center justify-center">
+              <VolumeX size={16} />
+            </div>
+            <span className="text-white text-xs">Upload audio file</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
