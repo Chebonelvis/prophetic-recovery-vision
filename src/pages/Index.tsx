@@ -5,10 +5,12 @@ import Scripture from "@/components/Scripture";
 import Testimonials from "@/components/Testimonials";
 import Registration from "@/components/Registration";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import Navigation from "@/components/Navigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <Navigation />
       <Hero />
       <EventDescription />
       <Scripture />

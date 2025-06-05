@@ -1,13 +1,16 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Calendar, Clock, MapPin, Users, Phone, Mail, User } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Phone, Mail, User, LogIn } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 
 const Registration = () => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,34 +29,43 @@ const Registration = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      toast.error("Please sign in to register for the event.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // TODO: Replace with actual API endpoint when backend is ready
-      // const response = await fetch('/api/register', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
-      
-      // Simulate API call for now
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log('Registration data:', formData);
-      
-      toast.success("Registration successful! We'll send you event updates via email.");
-      
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        church: "",
-        attendeeCount: "1"
-      });
-      
+      const { error } = await supabase
+        .from('registrations')
+        .insert([
+          {
+            user_id: user.id,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            church: formData.church || null,
+            attendee_count: parseInt(formData.attendeeCount)
+          }
+        ]);
+
+      if (error) {
+        console.error('Registration error:', error);
+        toast.error("Registration failed. Please try again.");
+      } else {
+        toast.success("Registration successful! We'll send you event updates via email.");
+        
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          church: "",
+          attendeeCount: "1"
+        });
+      }
     } catch (error) {
       console.error('Registration error:', error);
       toast.error("Registration failed. Please try again.");
@@ -141,113 +153,120 @@ const Registration = () => {
             <CardHeader>
               <CardTitle className="text-2xl font-bold text-gray-900">Register Now</CardTitle>
               <CardDescription>
-                Complete the form below to register for Recovery 2025
+                {user ? "Complete the form below to register for Recovery 2025" : "Please sign in to register for the event"}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="flex items-center space-x-2">
-                    <User className="h-4 w-4" />
-                    <span>Full Name *</span>
-                  </Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter your full name"
-                    className="h-12"
-                  />
+              {user ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="flex items-center space-x-2">
+                      <User className="h-4 w-4" />
+                      <span>Full Name *</span>
+                    </Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Enter your full name"
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4" />
+                      <span>Email Address *</span>
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Enter your email address"
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="flex items-center space-x-2">
+                      <Phone className="h-4 w-4" />
+                      <span>Phone Number *</span>
+                    </Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Enter your phone number"
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="church">Church/Ministry (Optional)</Label>
+                    <Input
+                      id="church"
+                      name="church"
+                      type="text"
+                      value={formData.church}
+                      onChange={handleInputChange}
+                      placeholder="Enter your church or ministry"
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="attendeeCount">Number of Attendees</Label>
+                    <Input
+                      id="attendeeCount"
+                      name="attendeeCount"
+                      type="number"
+                      min="1"
+                      max="50"
+                      value={formData.attendeeCount}
+                      onChange={handleInputChange}
+                      className="h-12"
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full h-12 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold text-lg"
+                  >
+                    {isSubmitting ? "Registering..." : "Register for Recovery 2025"}
+                  </Button>
+
+                  <p className="text-sm text-gray-600 text-center">
+                    By registering, you agree to receive event updates and important information about Recovery 2025.
+                  </p>
+                </form>
+              ) : (
+                <div className="text-center space-y-6">
+                  <div className="bg-gray-50 p-6 rounded-lg">
+                    <LogIn className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Sign In Required</h3>
+                    <p className="text-gray-600 mb-4">
+                      Please create an account or sign in to register for Recovery 2025
+                    </p>
+                    <Link to="/auth">
+                      <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700">
+                        Sign In / Sign Up
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="flex items-center space-x-2">
-                    <Mail className="h-4 w-4" />
-                    <span>Email Address *</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter your email address"
-                    className="h-12"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="flex items-center space-x-2">
-                    <Phone className="h-4 w-4" />
-                    <span>Phone Number *</span>
-                  </Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter your phone number"
-                    className="h-12"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="church">Church/Ministry (Optional)</Label>
-                  <Input
-                    id="church"
-                    name="church"
-                    type="text"
-                    value={formData.church}
-                    onChange={handleInputChange}
-                    placeholder="Enter your church or ministry"
-                    className="h-12"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="attendeeCount">Number of Attendees</Label>
-                  <Input
-                    id="attendeeCount"
-                    name="attendeeCount"
-                    type="number"
-                    min="1"
-                    max="50"
-                    value={formData.attendeeCount}
-                    onChange={handleInputChange}
-                    className="h-12"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full h-12 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold text-lg"
-                >
-                  {isSubmitting ? "Registering..." : "Register for Recovery 2025"}
-                </Button>
-
-                <p className="text-sm text-gray-600 text-center">
-                  By registering, you agree to receive event updates and important information about Recovery 2025.
-                </p>
-              </form>
+              )}
             </CardContent>
           </Card>
-        </div>
-
-        {/* API Integration Note */}
-        <div className="mt-12 text-center">
-          <div className="bg-yellow-400/10 border border-yellow-400/30 rounded-lg p-4 max-w-2xl mx-auto">
-            <p className="text-yellow-300 text-sm">
-              <strong>For Developers:</strong> Registration form ready for backend integration. 
-              Update the API endpoint in the handleSubmit function when backend is ready.
-            </p>
-          </div>
         </div>
       </div>
     </section>
