@@ -17,8 +17,8 @@ const Index = () => {
       <Testimonials />
       <Registration />
       
-      {/* Background Music Component - will show upload prompt until audio is provided */}
-      <BackgroundMusic />
+      {/* Background Music Component with audio file */}
+      <BackgroundMusic audioSrc="/Yahweh Sabaoth ｜ Nathaniel Bassey.mp3" />
       
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8">
