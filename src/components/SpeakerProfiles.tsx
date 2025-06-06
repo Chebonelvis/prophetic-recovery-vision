@@ -9,7 +9,7 @@ const SpeakerProfiles = () => {
       role: "Morning Session Speaker",
       bio: "Bishop Fred Akama is a seasoned minister with over 20 years of experience in pastoral ministry. He leads Tent of Testimonies International and is known for his profound teaching on the Word of God and spiritual foundations.",
       focus: "The Word",
-      image: "/placeholder.svg"
+      image: "/lovable-uploads/c4f8be7f-c1b3-45fd-83ff-63b6532cb451.png"
     },
     {
       name: "Apostle Ng'ang'a",
@@ -17,7 +17,7 @@ const SpeakerProfiles = () => {
       role: "Mid-Morning Speaker",
       bio: "Apostle Ng'ang'a is a powerful evangelist and apostle known for his healing and deliverance ministry. He has ministered across Kenya and internationally, bringing freedom to many through the power of God.",
       focus: "Healing & Deliverance",
-      image: "/placeholder.svg"
+      image: "/lovable-uploads/1d36484d-ddf9-4385-9189-b7443c50f562.png"
     },
     {
       name: "Pastor T. Mwangi",
@@ -25,7 +25,7 @@ const SpeakerProfiles = () => {
       role: "Afternoon Speaker", 
       bio: "Pastor T. Mwangi is a dedicated intercessor and pastor who leads Life Church International. He is passionate about prayer and intercession, having led numerous prayer movements and revival meetings.",
       focus: "Intercessory Prayer",
-      image: "/placeholder.svg"
+      image: "/lovable-uploads/eb638daf-8f6a-42e0-88a9-1b4b0cfe08d6.png"
     },
     {
       name: "Prophet Johnson Selman",
@@ -33,7 +33,7 @@ const SpeakerProfiles = () => {
       role: "Main Guest & Evening Speaker",
       bio: "Prophet Johnson Selman is a globally respected voice in the prophetic and apostolic movement. He is the founder of Eternity Network International (ENI) and is known for transforming lives through deep revelation, healing, and the prophetic word.",
       focus: "Prophetic Strategy",
-      image: "/placeholder.svg",
+      image: "/lovable-uploads/38da47b9-2329-49ee-91e4-5244f978b6a7.png",
       isMainGuest: true
     }
   ];
