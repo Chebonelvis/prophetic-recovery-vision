@@ -9,7 +9,8 @@ const EventFocus = () => {
       speaker: "Bishop Akama",
       description: "Foundation building through powerful biblical teaching and revelation",
       gradient: "from-blue-600 to-indigo-600",
-      bgGradient: "from-blue-50 to-indigo-50"
+      bgGradient: "from-blue-50 to-indigo-50",
+      speakerImage: "/lovable-uploads/bfb7e441-7727-44df-b45e-2d87bcdb9d5d.png"
     },
     {
       icon: Heart,
@@ -17,7 +18,8 @@ const EventFocus = () => {
       speaker: "Apostle Ng'ang'a",
       description: "Supernatural healing and freedom from every form of bondage",
       gradient: "from-green-600 to-emerald-600",
-      bgGradient: "from-green-50 to-emerald-50"
+      bgGradient: "from-green-50 to-emerald-50",
+      speakerImage: "/lovable-uploads/d85e6b12-413d-4d1f-b5c4-18e4ca7de342.png"
     },
     {
       icon: Zap,
@@ -25,7 +27,8 @@ const EventFocus = () => {
       speaker: "Pastor T. Mwangi", 
       description: "Strategic prayer and intercession for breakthrough and revival",
       gradient: "from-purple-600 to-violet-600",
-      bgGradient: "from-purple-50 to-violet-50"
+      bgGradient: "from-purple-50 to-violet-50",
+      speakerImage: "/lovable-uploads/dd2c247d-85b9-4ea4-b8fe-ce0ad3dbd967.png"
     },
     {
       icon: Eye,
@@ -34,6 +37,7 @@ const EventFocus = () => {
       description: "Divine strategy and prophetic direction for your destiny",
       gradient: "from-yellow-500 to-orange-500",
       bgGradient: "from-yellow-50 to-orange-50",
+      speakerImage: "/lovable-uploads/99bfefdf-04ce-4649-abd5-6d291fd69409.png",
       isMain: true
     }
   ];
@@ -55,9 +59,14 @@ const EventFocus = () => {
           {focusAreas.map((area, index) => (
             <div
               key={index}
-              className={`group relative bg-gradient-to-br ${area.bgGradient} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 ${
+              className={`group relative bg-gradient-to-br ${area.bgGradient} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 overflow-hidden ${
                 area.isMain ? 'ring-2 ring-yellow-400' : ''
               }`}
+              style={{
+                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(${area.speakerImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
             >
               {area.isMain && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -67,7 +76,7 @@ const EventFocus = () => {
                 </div>
               )}
 
-              <div className="text-center">
+              <div className="text-center relative z-10">
                 <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${area.gradient} mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <area.icon className="h-8 w-8 text-white" />
                 </div>
