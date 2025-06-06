@@ -6,6 +6,11 @@ import Testimonials from "@/components/Testimonials";
 import Registration from "@/components/Registration";
 import BackgroundMusic from "@/components/BackgroundMusic";
 import Navigation from "@/components/Navigation";
+import Sessions from "@/components/Sessions";
+import SpeakerProfiles from "@/components/SpeakerProfiles";
+import About from "@/components/About";
+import EventFocus from "@/components/EventFocus";
+import SocialShare from "@/components/SocialShare";
 
 const Index = () => {
   return (
@@ -13,9 +18,14 @@ const Index = () => {
       <Navigation />
       <Hero />
       <EventDescription />
+      <Sessions />
+      <SpeakerProfiles />
+      <EventFocus />
       <Scripture />
+      <About />
       <Testimonials />
       <Registration />
+      <SocialShare />
       
       {/* Background Music Component with audio file */}
       <BackgroundMusic audioSrc="/Yahweh Sabaoth ｜ Nathaniel Bassey.mp3" />
@@ -33,6 +43,9 @@ const Index = () => {
             <span>#Recovery2025</span>
             <span>#PropheticStrategy</span>
             <span>#DivineRestoration</span>
+          </div>
+          <div className="mt-4 text-xs text-gray-600">
+            <p>© 2025 Recovery Conference. All rights reserved. | Secure SSL Protected</p>
           </div>
         </div>
       </footer>

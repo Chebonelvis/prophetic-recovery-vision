@@ -1,13 +1,15 @@
+
 import { Calendar, MapPin, Ticket } from "lucide-react";
 import BackgroundVideo from "./BackgroundVideo";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 overflow-hidden">
-      {/* Background Image */}
+      {/* Background Video instead of image */}
       <BackgroundVideo 
-        useImage={true}
-        imageSrc="/lovable-uploads/1a77e9a5-a12a-43d1-9415-dbba42ba01fc.png"
+        useImage={false}
+        videoSrc="https://player.vimeo.com/external/434045526.sd.mp4?s=c27eecc69a27dbc4ff2b87d38afc35f1a9e7c02d&profile_id=139&oauth2_token_id=57447761"
       />
       
       {/* Background Pattern */}
@@ -61,9 +63,16 @@ const Hero = () => {
               Join thousands as we gather for a divine encounter that will reshape destinies, 
               restore what was lost, and release prophetic strategy for the year ahead.
             </p>
-            <button className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black font-bold text-lg px-12 py-4 rounded-full transform hover:scale-105 transition-all duration-300 shadow-2xl">
-              Register Now - It's Free!
-            </button>
+            <div className="space-y-4">
+              <Link to="/auth">
+                <button className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-black font-bold text-lg px-12 py-4 rounded-full transform hover:scale-105 transition-all duration-300 shadow-2xl animate-pulse">
+                  JOIN NOW - It's Free!
+                </button>
+              </Link>
+              <p className="text-sm text-gray-400">
+                Secure your place at this historic gathering
+              </p>
+            </div>
           </div>
         </div>
       </div>
