@@ -60,11 +60,6 @@ const Sessions = () => {
                   ? 'border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-50' 
                   : 'border-gray-100'
               }`}
-              style={{
-                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url(${session.speakerImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
             >
               {session.isMainGuest && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -83,9 +78,16 @@ const Sessions = () => {
                   }`}>
                     <Clock className="h-6 w-6 text-white" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900">{session.title}</h3>
                     <p className="text-gray-600">{session.time}</p>
+                  </div>
+                  <div className="ml-4">
+                    <img 
+                      src={session.speakerImage} 
+                      alt={session.speaker}
+                      className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md"
+                    />
                   </div>
                 </div>
 

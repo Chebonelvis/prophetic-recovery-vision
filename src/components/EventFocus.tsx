@@ -62,11 +62,6 @@ const EventFocus = () => {
               className={`group relative bg-gradient-to-br ${area.bgGradient} rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-4 border border-gray-100 overflow-hidden ${
                 area.isMain ? 'ring-2 ring-yellow-400' : ''
               }`}
-              style={{
-                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(${area.speakerImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
             >
               {area.isMain && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -77,8 +72,16 @@ const EventFocus = () => {
               )}
 
               <div className="text-center relative z-10">
-                <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${area.gradient} mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${area.gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <area.icon className="h-8 w-8 text-white" />
+                </div>
+
+                <div className="mb-4">
+                  <img 
+                    src={area.speakerImage} 
+                    alt={area.speaker}
+                    className="w-16 h-16 rounded-full object-cover mx-auto border-2 border-white shadow-md"
+                  />
                 </div>
 
                 <h3 className="text-xl font-bold text-gray-900 mb-2">{area.title}</h3>
